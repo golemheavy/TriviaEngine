@@ -72,23 +72,23 @@ function clickListener(event) {
 		if (clickedValue.attributes[1].value.includes("choice-btn")) {
 			if (clickedValue.attributes[0].value !== "undefined") {
 				targetDiv = document.getElementById(clickedValue.attributes[0].value);
-				console.log(targetDiv.innerHTML);
 				textElements.selectedAnswerText.textContent = "You selected: " + targetDiv.innerHTML;
 			}
 		}
 	}
 }
 
-document.addEventListener('click', clickListener);
-
-for (var x = 0; x < questionData.length; x++) {
-
-	textElements.questionText.textContent = questionData[x].question;
-	textElements.answerButtonOne.textContent = questionData[x].answers[0];
-	textElements.answerButtonTwo.textContent = questionData[x].answers[1];
-	textElements.answerButtonThree.textContent = questionData[x].answers[2];
-	textElements.answerButtonFour.textContent = questionData[x].answers[3];
+function gameLoop() {
 	
-	
+	for (var x = 0; x < questionData.length && !gameOver; x++) {
 
+		textElements.questionText.textContent = questionData[x].question;
+		textElements.answerButtonOne.textContent = questionData[x].answers[0];
+		textElements.answerButtonTwo.textContent = questionData[x].answers[1];
+		textElements.answerButtonThree.textContent = questionData[x].answers[2];
+		textElements.answerButtonFour.textContent = questionData[x].answers[3];
+	}
 }
+
+document.addEventListener('click', clickListener);
+gameLoop();

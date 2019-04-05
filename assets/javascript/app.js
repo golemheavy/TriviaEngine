@@ -41,7 +41,7 @@ const questionData = [
 		question:	"Which alien race did Ronald Reagan say reminded him of Congress?",
 		flavor:		"Filed under 'Presidential Wit'",
 		answers:	["Borg","Vulcans","Klingons","Ferengi"],
-		correctAnswerIndex: 0
+		correctAnswerIndex: 2
 	},
 	{
 		question:	"Which species was the first to discover warp drive?",
@@ -53,7 +53,7 @@ const questionData = [
 		question:	"Which Star Trek actor originally devised the Klingon language?",
 		flavor:		"A Gentleman and a Scholar", // "A Rare and Cunning Linguist",
 		answers:	["Michael Ansara","James Doohan","Mark Lenard","Leonard Nimoy"],
-		correctAnswerIndex: 0
+		correctAnswerIndex: 1
 	},
 	{
 		question:	"What character was adopted by the Vulcan ambassador Sarek?",
@@ -71,8 +71,16 @@ var textElements = {
 	answerButtonOne		: document.getElementById("choice-1"),
 	answerButtonTwo		: document.getElementById("choice-2"),
 	answerButtonThree	: document.getElementById("choice-3"),
-	answerButtonFour	: document.getElementById("choice-4") // next-question
+	answerButtonFour	: document.getElementById("choice-4")
 };
+
+function calculateScore() {
+	var score = 0;
+	for (var x = 0; x < questionData.length; x++) {
+		if (questionData[x].UserAnswer.includes(questionData[x].answers[questionData[x].correctAnswerIndex])) score++;
+	}
+	return score;
+}
 
 function countDown() {
 	time--;
@@ -135,7 +143,7 @@ function nextQuestion() {
 		textElements.answerButtonFour.textContent = questionData[questionIndex].answers[3];
 		questionIndex++;
 	}
-	else {clearInterval(questionIntervalId); return; gameOver = true; } // call a game over function to calculate and display score } // display game over message and remove click listener and clear interval
+	else {clearInterval(questionIntervalId); gameOver = true; gameOverFunc(); return;} // call a game over function to calculate and display score } // display game over message and remove click listener and clear interval
 }
 
 function gameLoop() {
@@ -146,7 +154,8 @@ function gameLoop() {
 }
 
 function gameOverFunc() {
-
+	
+	console.log(calculateScore());
 	//calculateScore(); // returns a value from 0 to guestionData.length representing the number they got right
 	//displayScore(); // displays score and win / lose message
 

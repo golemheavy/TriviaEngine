@@ -1,5 +1,7 @@
 let gameOver = false;
 let targetDiv = null;
+let questionIndex = 0;
+let questionInterval = null;
 
 // trivia questions lifted from:
 // http://www.usefultrivia.com/tv_trivia/star_trek_trivia_index.html
@@ -78,16 +80,26 @@ function clickListener(event) {
 	}
 }
 
+function nextQuestion() {
+	
+	//need to deactivate selected button here
+
+	if (questionIndex < questionData.length) {
+		textElements.questionText.textContent = questionData[questionIndex].question;
+		textElements.answerButtonOne.textContent = questionData[questionIndex].answers[0];
+		textElements.answerButtonTwo.textContent = questionData[questionIndex].answers[1];
+		textElements.answerButtonThree.textContent = questionData[questionIndex].answers[2];
+		textElements.answerButtonFour.textContent = questionData[questionIndex].answers[3];
+		questionIndex++;
+	}
+	else {clearInterval(questionInterval); return;} // display game over message and remove click listened and clear interval
+
+}
+
 function gameLoop() {
 	
-	for (var x = 0; x < questionData.length && !gameOver; x++) {
-
-		textElements.questionText.textContent = questionData[x].question;
-		textElements.answerButtonOne.textContent = questionData[x].answers[0];
-		textElements.answerButtonTwo.textContent = questionData[x].answers[1];
-		textElements.answerButtonThree.textContent = questionData[x].answers[2];
-		textElements.answerButtonFour.textContent = questionData[x].answers[3];
-	}
+	nextQuestion();
+	questionInterval = setInterval(nextQuestion, 10 * 1000);
 }
 
 document.addEventListener('click', clickListener);

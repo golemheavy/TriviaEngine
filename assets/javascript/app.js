@@ -160,6 +160,8 @@ function gameOverFunc() {
 	gameOver = true;
 	targetDiv = document.getElementById("next-question");
 	targetDiv.remove();
+	targetDiv = document.getElementById("main");
+	targetDiv.remove();
 	textElements.selectedAnswerText.textContent = "";
 	// console.log(calculateScore()); // returns a value from 0 to guestionData.length representing the number they got right
 	displayScore(calculateScore()); // displays score and win / lose message

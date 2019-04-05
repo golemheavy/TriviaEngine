@@ -1,7 +1,23 @@
+body {
+	background-image: url("../images/stimage.jpg");
+	background-attachment: fixed;
+}
+
 .jumbotron {
 	text-align: center;
+	background-color:transparent;
+	color: white;
 }
 
 .btn-primary {
 	width: 100%;
+}
+
+#selected-answer {
+	color: white;
+	font-weight; bold;
+}
+
+.card {
+	opacity: .75;
 }

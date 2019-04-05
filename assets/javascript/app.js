@@ -77,17 +77,20 @@ var textElements = {
 function calculateScore() {
 	var score = 0;
 	for (var x = 0; x < questionData.length; x++) {
-		if (questionData[x].UserAnswer.includes(questionData[x].answers[questionData[x].correctAnswerIndex])) score++;
+		if (questionData[x].UserAnswer !== "Nothing Selected" && questionData[x].UserAnswer.includes(questionData[x].answers[questionData[x].correctAnswerIndex])) score++;
 	}
 	return score;
 }
+
+function displayScore() {
+// unhide scoreboard div and hide question card / container div
+};
 
 function countDown() {
 	time--;
 	convertedTime = timeConverter(time); // Get the current time, pass that into the timeConverter function, and save the result in a variable.
 // $("#display").text(convertedTime); // need to replace this since I am not using jquery here
 }
-
 
 function timeConverter(t) {
 
@@ -121,10 +124,7 @@ function clickListener(event) {
 				questionData[questionIndex-1].UserAnswer = textElements.selectedAnswerText.innerHTML;
 				textElements.selectedAnswerText.textContent = "Nothing Selected"
 				clearInterval(questionIntervalId);
-				//questionIndex++;
 				gameLoop();
-				// nextQuestion();
-				// questionInterval = setInterval(nextQuestion, 15 * 1000);
 			}
 		}
 	}
@@ -132,7 +132,9 @@ function clickListener(event) {
 
 function nextQuestion() {
 	
-	//need to deactivate selected button here
+	if (questionIndex > 0 && typeof questionData[questionIndex-1].UserAnswer === "undefined") questionData[questionIndex-1].UserAnswer = textElements.selectedAnswerText.innerHTML; //this sets the users answer in the data object if the question times out instead of user clicking next question 
+	//need to deactivate the previously selected button here
+	textElements.selectedAnswerText.textContent = "Nothing Selected"
 	if (questionIndex < questionData.length) {
 		textElements.questionText.textContent = questionData[questionIndex].question;
 		textElements.flavorText.textContent = questionData[questionIndex].flavor;
@@ -155,9 +157,12 @@ function gameLoop() {
 
 function gameOverFunc() {
 	
-	console.log(calculateScore());
-	//calculateScore(); // returns a value from 0 to guestionData.length representing the number they got right
-	//displayScore(); // displays score and win / lose message
+	gameOver = true;
+	targetDiv = document.getElementById("next-question");
+	targetDiv.remove();
+	textElements.selectedAnswerText.textContent = "";
+	// console.log(calculateScore()); // returns a value from 0 to guestionData.length representing the number they got right
+	displayScore(calculateScore()); // displays score and win / lose message
 
 }
 

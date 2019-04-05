@@ -9,18 +9,43 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="./assets/css/style.css">
 </head>
-
-
 <body>
-
 	<div class="jumbotron"><h1>Trivia Game</h1></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-12" id="timer"><div>
-			<div class="col-12" id="question"><div>
-			<div class="col-12" id="answers"><div>
+			<div class="col-12" id="question">
+				<div class="card">
+					<div class="card-header"><div class="row"><div class="col-auto mr-auto" id="question-number">Question #</div><div class="col-auto" id="timer">Timer</div></div></div>
+					<div class="card-body">
+						<div class="container">
+							<h5 class="card-title">Flavor / Topic Text</h5>
+							<p class="card-text">This is the question text.</p>
+							<div class="row">
+								<div class="col-3">
+									<a href="#" class="btn btn-primary">Answer1</a>
+								</div>
+								<div class="col-3">
+									<a href="#" class="btn btn-primary">Answer2</a>
+								</div>
+								<div class="col-3">
+									<a href="#" class="btn btn-primary">Answer3</a>
+								</div>
+								<div class="col-3">
+									<a href="#" class="btn btn-primary">Answer4</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12" id="selected-answer">the Selected Answer shows here</div>
+		</div>
+		<div class="row">
+			<div class="col-12" id="next-question">Next Question Button goes here</div>
+		</div>
 	</div>
 	<script src="./assets/javascript/app.js"></script>
 </body>
 </html>
-

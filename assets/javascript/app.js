@@ -1,7 +1,14 @@
 let gameOver = false;
 let targetDiv = null;
 let questionIndex = 0;
-let questionInterval = null;
+let questionIntervalId = null;
+let time = 15;
+let convertedTime;
+
+function resetTimer() {
+	time = 15;
+  // $("#display").text("00:00")  // replace this function call
+}
 
 // trivia questions lifted from:
 // http://www.usefultrivia.com/tv_trivia/star_trek_trivia_index.html
@@ -67,6 +74,30 @@ var textElements = {
 	answerButtonFour	: document.getElementById("choice-4") // next-question
 };
 
+function countDown() {
+	time--;
+	convertedTime = timeConverter(time); // Get the current time, pass that into the timeConverter function, and save the result in a variable.
+// $("#display").text(convertedTime); // need to replace this since I am not using jquery here
+}
+
+
+function timeConverter(t) {
+
+  //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+	var minutes = Math.floor(t / 60);
+	var seconds = t - (minutes * 60);
+	if (seconds < 10) {
+		seconds = "0" + seconds;
+	}
+	if (minutes === 0) {
+		minutes = "00";
+	}
+	else if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	return minutes + ":" + seconds;
+}
+
 function clickListener(event) {
 	if (gameOver) { document.removeEventListener('click', clickListener); return; } // also need to display game over message, and clear interval
 	var clickedValue = event.target;
@@ -81,7 +112,7 @@ function clickListener(event) {
 			if (clickedValue.attributes[0].value === "next-question") {
 				questionData[questionIndex-1].UserAnswer = textElements.selectedAnswerText.innerHTML;
 				textElements.selectedAnswerText.textContent = "Nothing Selected"
-				clearInterval(questionInterval);
+				clearInterval(questionIntervalId);
 				//questionIndex++;
 				gameLoop();
 				// nextQuestion();
@@ -104,13 +135,21 @@ function nextQuestion() {
 		textElements.answerButtonFour.textContent = questionData[questionIndex].answers[3];
 		questionIndex++;
 	}
-	else {clearInterval(questionInterval); return; gameOver = true; // call a game over function to calculate and display score } // display game over message and remove click listener and clear interval
+	else {clearInterval(questionIntervalId); return; gameOver = true; } // call a game over function to calculate and display score } // display game over message and remove click listener and clear interval
 }
 
 function gameLoop() {
 	
 	nextQuestion();
-	questionInterval = setInterval(nextQuestion, 15 * 1000);
+	questionIntervalId = setInterval(nextQuestion, 15 * 1000);
+
+}
+
+function gameOverFunc() {
+
+	//calculateScore(); // returns a value from 0 to guestionData.length representing the number they got right
+	//displayScore(); // displays score and win / lose message
+
 }
 
 document.addEventListener('click', clickListener);

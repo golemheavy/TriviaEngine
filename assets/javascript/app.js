@@ -74,7 +74,7 @@ var textElements = {
 	answerButtonFour	: document.getElementById("choice-4")
 };
 
-function calculateScore() {
+function calculateScore() {  // returns a value from 0 to guestionData.length representing the number they got right
 	var score = 0;
 	for (var x = 0; x < questionData.length; x++) {
 		if (questionData[x].UserAnswer !== "Nothing Selected" && questionData[x].UserAnswer.includes(questionData[x].answers[questionData[x].correctAnswerIndex])) score++;
@@ -82,8 +82,14 @@ function calculateScore() {
 	return score;
 }
 
-function displayScore() {
+function displayScore(score) {
 // unhide scoreboard div and hide question card / container div
+	targetDiv = document.getElementById("scoreboard");
+	if (typeof targetDiv !== "null") targetDiv.classList.remove("invisible"); // click listener should be stopped but this will prevent an error if it isn't
+	// button should say, play again? and should call location.reload(); (or document.reload?) to reload page
+	//the above comment is wrong, it seems that there is still an error possible when clicking the button which is now hidden because of the page reload
+	targetDiv = document.getElementById("user-score");
+	if (typeof targetDiv !== "null") targetDiv.innerHTML = "You Scored " + score + " out of " + questionData.length ; 
 };
 
 function countDown() {
@@ -163,7 +169,6 @@ function gameOverFunc() {
 	targetDiv = document.getElementById("main");
 	targetDiv.remove();
 	textElements.selectedAnswerText.textContent = "";
-	// console.log(calculateScore()); // returns a value from 0 to guestionData.length representing the number they got right
 	displayScore(calculateScore()); // displays score and win / lose message
 
 }

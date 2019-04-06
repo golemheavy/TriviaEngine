@@ -22,4 +22,9 @@ body {
 
 .card {
 	opacity: .82;
+	text-align:center;
+}
+
+.invisible {
+	display: none;
 }

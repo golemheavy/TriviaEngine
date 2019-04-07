@@ -117,7 +117,7 @@ function timeConverter(t) {
 
 function clickListener(event) {
 	if (gameOver) { document.removeEventListener('click', clickListener); return; } // also need to display game over message, and clear interval
-	var clickedValue = event.target;
+	var clickedValue = event.target; console.log(event.target);
 	if (clickedValue.attributes[1]) {
 		if (clickedValue.attributes[1].value.includes("choice-btn")) {
 			if (clickedValue.attributes[0].value !== "undefined") {
@@ -133,6 +133,17 @@ function clickListener(event) {
 				gameLoop();
 			}
 		}
+	}
+}
+
+function endGameClickListener(event) {
+	if (gameOver) {
+		var clickedValue = event.target; console.log(event.target);
+	//if (clickedValue.attributes[1]) {
+	//	if (clickedValue.attributes[1].value.includes("choice-btn")) {
+	//		if (clickedValue.attributes[0].value !== "undefined") {
+	//			targetDiv = document.getElementById(clickedValue.attributes[0].value);
+	//			textElements.selectedAnswerText.textContent = "You selected: " + targetDiv.innerHTML;
 	}
 }
 
@@ -157,7 +168,7 @@ function nextQuestion() {
 function gameLoop() {
 	
 	nextQuestion();
-	questionIntervalId = setInterval(nextQuestion, 15 * 1000);
+	if (questionIndex < questionData.length) questionIntervalId = setInterval(nextQuestion, 15 * 1000);
 
 }
 
@@ -168,8 +179,9 @@ function gameOverFunc() {
 	targetDiv.remove();
 	targetDiv = document.getElementById("main");
 	targetDiv.remove();
-	textElements.selectedAnswerText.textContent = "";
+	textElements.selectedAnswerText.remove();
 	displayScore(calculateScore()); // displays score and win / lose message
+	document.addEventListener('click', endGameClickListener);
 
 }
 

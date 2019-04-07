@@ -128,12 +128,12 @@ function populateAnswers() { // populate and unhide answers pane
 	if (typeof targetDiv !== "null" && targetDiv.classList.contains("invisible")) {
 		document.removeEventListener('click', endGameClickListener);
 		targetDiv.classList.remove("invisible");
-		targetDiv.innerHTML = questionData.map(showScores);
+		targetDiv.innerHTML = questionData.map(showScores).join('');
 	}
 }
 
 function showScores(x) {
-	var returnString = `<div class="alert alert-primary" style="font-weight:bold;">Question: ` + x.question + "</div>"; // "<p></p>";
+	var returnString = `<div class="alert alert-primary" style="font-weight:bold;">Question: ` + x.question + "</div>";
 	if (x.UserAnswer.includes(x.answers[x.correctAnswerIndex])) returnString += '<div class="alert alert-success" style="font-weight:bold;">';
 	else returnString += '<div class="alert alert-danger" style="font-weight:bold;">';
 	returnString += 'Answer: ' + x.answers[x.correctAnswerIndex] + ". ";

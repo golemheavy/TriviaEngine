@@ -85,9 +85,7 @@ function calculateScore() {  // returns a value from 0 to guestionData.length re
 function displayScore(score) {
 // unhide scoreboard div and hide question card / container div
 	targetDiv = document.getElementById("scoreboard");
-	if (typeof targetDiv !== "null") targetDiv.classList.remove("invisible"); // click listener should be stopped but this will prevent an error if it isn't
-	// button should say, play again? and should call location.reload(); (or document.reload?) to reload page
-	//the above comment is wrong, it seems that there is still an error possible when clicking the button which is now hidden because of the page reload
+	if (typeof targetDiv !== "null") targetDiv.classList.remove("invisible");
 	targetDiv = document.getElementById("user-score");
 	if (typeof targetDiv !== "null") targetDiv.innerHTML = "You Scored " + score + " out of " + questionData.length ; 
 };
@@ -136,14 +134,31 @@ function clickListener(event) {
 	}
 }
 
+function populateAnswers() { // populate and unhide answers pane
+	targetDiv = document.getElementById("answer-pane");
+	if (typeof targetDiv !== "null" && targetDiv.classList.contains("invisible")) {
+		document.removeEventListener('click', endGameClickListener);
+		targetDiv.classList.remove("invisible");
+		targetDiv.innerHTML = questionData.map(showScores);
+	}
+}
+
+function showScores(x) {
+	var returnString = `<div class="alert alert-primary" style="font-weight:bold;">Question: ` + x.question + "</div>"; // "<p></p>";
+	if (x.UserAnswer.includes(x.answers[x.correctAnswerIndex])) returnString += '<div class="alert alert-success" style="font-weight:bold;">';
+	else returnString += '<div class="alert alert-danger" style="font-weight:bold;">';
+	returnString += 'Correct Answer: ' + x.answers[x.correctAnswerIndex] + ". ";
+	returnString += x.UserAnswer + "</div>";
+	return returnString;
+}
+
 function endGameClickListener(event) {
 	if (gameOver) {
-		var clickedValue = event.target; console.log(event.target);
-	//if (clickedValue.attributes[1]) {
-	//	if (clickedValue.attributes[1].value.includes("choice-btn")) {
-	//		if (clickedValue.attributes[0].value !== "undefined") {
-	//			targetDiv = document.getElementById(clickedValue.attributes[0].value);
-	//			textElements.selectedAnswerText.textContent = "You selected: " + targetDiv.innerHTML;
+		var clickedValue = event.target;
+		if (typeof clickedValue.attributes[1] !== "undefined" && clickedValue.attributes[1].value.includes("choice-btn") && typeof clickedValue.attributes[0] !== "undefined" && clickedValue.attributes[0].value === "show-answers") {
+			populateAnswers();
+			clickedValue.remove();
+		}
 	}
 }
 

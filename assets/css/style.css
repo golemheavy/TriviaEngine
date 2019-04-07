@@ -9,10 +9,16 @@ body {
 	text-align: center;
 	background-color:transparent;
 	color: white;
+	margin-bottom: 0;
 }
 
 .btn-primary {
 	width: 100%;
+	margin: 5px 0px;
+}
+
+.btn-secondary {
+	margin-bottom: 10px;
 }
 
 #selected-answer {

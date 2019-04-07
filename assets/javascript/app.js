@@ -115,7 +115,7 @@ function timeConverter(t) {
 
 function clickListener(event) {
 	if (gameOver) { document.removeEventListener('click', clickListener); return; } // also need to display game over message, and clear interval
-	var clickedValue = event.target; console.log(event.target);
+	var clickedValue = event.target;
 	if (clickedValue.attributes[1]) {
 		if (clickedValue.attributes[1].value.includes("choice-btn")) {
 			if (clickedValue.attributes[0].value !== "undefined") {
@@ -147,7 +147,7 @@ function showScores(x) {
 	var returnString = `<div class="alert alert-primary" style="font-weight:bold;">Question: ` + x.question + "</div>"; // "<p></p>";
 	if (x.UserAnswer.includes(x.answers[x.correctAnswerIndex])) returnString += '<div class="alert alert-success" style="font-weight:bold;">';
 	else returnString += '<div class="alert alert-danger" style="font-weight:bold;">';
-	returnString += 'Correct Answer: ' + x.answers[x.correctAnswerIndex] + ". ";
+	returnString += 'Answer: ' + x.answers[x.correctAnswerIndex] + ". ";
 	returnString += x.UserAnswer + "</div>";
 	return returnString;
 }
@@ -158,6 +158,8 @@ function endGameClickListener(event) {
 		if (typeof clickedValue.attributes[1] !== "undefined" && clickedValue.attributes[1].value.includes("choice-btn") && typeof clickedValue.attributes[0] !== "undefined" && clickedValue.attributes[0].value === "show-answers") {
 			populateAnswers();
 			clickedValue.remove();
+			targetDiv = document.getElementById("reload-page");
+			if (typeof targetDiv !== "null" && targetDiv.classList.contains("col-md-6")) targetDiv.classList.replace("col-md-6","col-md-12");
 		}
 	}
 }

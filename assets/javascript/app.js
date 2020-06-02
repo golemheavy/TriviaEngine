@@ -71,7 +71,7 @@ const questionData = [
 		question:	"What character was adopted by the Vulcan ambassador Sarek?",
 		flavor:		"Cultural Exchange",
 		answers:	["Spock","Sybok","Sylvia Tilly","Michael Burnham"],
-		correctAnswerIndex: 0
+		correctAnswerIndex: 3
 	}
 ];
 

@@ -2,12 +2,15 @@
   "name": "triviaengine",
   "version": "1.0.0",
   "description": "This project is a simple Trivia Engine for a mobile-friendly web application. It can be used for any subject or topic of trivia question, or even for educational purposes like online quizzes.",
-  "main": "index.js",
+  "browser": "index.html",
   "dependencies": {},
   "devDependencies": {
-    "serve": "^11.3.2"
+    "eslint": "^7.1.0",
+    "serve": "^11.3.2",
+    "typescript": "^3.8.3"
   },
   "scripts": {
+    "ts": "tsc",
     "serve": "serve .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
